@@ -2,13 +2,41 @@ body {
   font-family: Arial, sans-serif;
   text-align: center;
   margin: 20px;
+  padding: 0 10px;
   color: rgb(41, 41, 43);
   background-color: rgb(208, 220, 227);
   font-family: "Righteous", serif;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px auto;
+}
+
+h2 {
+  margin: 20px auto;
 }
 
 #input-container {
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+label[for="word-dropdown"] {
+  display: block;
+  margin: 10px 0;
+}
+
+#word-dropdown {
+  margin: 5px 0 15px;
 }
 
 input {
@@ -16,7 +44,9 @@ input {
   padding: 5px;
   text-transform: uppercase;
   width: 150px;
+  max-width: 90%;
   text-align: center;
+  box-sizing: border-box;
 }
 
 button {
@@ -24,6 +54,7 @@ button {
   padding: 5px 10px;
   margin-left: 10px;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .reset-button {
@@ -52,6 +83,9 @@ button {
 #previous-guesses {
   list-style: none;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .guess-item {
@@ -81,6 +115,10 @@ button {
 #filtered-words {
   color: rgb(41, 41, 43);
   font-family: "Patua One", serif;
+  text-align: center;
+  max-width: 100%;
+  padding: 0 10px;
+  box-sizing: border-box;
 }
 
 .hidden-words {
@@ -109,6 +147,25 @@ button {
   opacity: 0; /* Initially hidden */
   transform: scale(0.8);
   animation: reveal 1s ease-in forwards;
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  .letter-box {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 400px) {
+  .letter-box {
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    font-size: 16px;
+  }
 }
 
 .green {
@@ -138,6 +195,9 @@ button {
 #keyboard {
   margin: 30px auto 10px;
   max-width: 700px;
+  width: 100%;
+  padding: 0 10px;
+  box-sizing: border-box;
 }
 
 .virtual-keyboard {
@@ -149,6 +209,21 @@ button {
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 12px;
   background: #65646d;
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  .virtual-keyboard {
+    gap: 6px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 400px) {
+  .virtual-keyboard {
+    gap: 4px;
+    padding: 8px;
+  }
 }
 
 .key {
@@ -165,12 +240,39 @@ button {
   color: #ffffff;
   font-family: "Patua One", serif;
   transition: transform 0.15s ease, border-color 0.15s ease;
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  .key {
+    width: 44px;
+    min-height: 52px;
+  }
+}
+
+@media (max-width: 400px) {
+  .key {
+    width: 38px;
+    min-height: 46px;
+  }
 }
 
 .key-letter {
   font-size: 1.2rem;
   letter-spacing: 1px;
   z-index: 1;
+}
+
+@media (max-width: 600px) {
+  .key-letter {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .key-letter {
+    font-size: 0.9rem;
+  }
 }
 
 .key-position {
@@ -303,5 +405,79 @@ button {
   100% {
     transform: scale(1);
     opacity: 1;
+  }
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 600px) {
+  body {
+    margin: 15px 5px;
+    padding: 0 5px;
+  }
+
+  h1,
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  #input-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  button {
+    margin-left: 0;
+    margin-top: 5px;
+  }
+
+  .guess-item {
+    font-size: 16px;
+  }
+
+  .success-message {
+    max-width: 90%;
+    padding: 12px 20px;
+  }
+
+  .success-message p {
+    font-size: 1.1rem;
+  }
+
+  #filtered-words {
+    font-size: 0.9rem;
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 400px) {
+  body {
+    margin: 10px 5px;
+  }
+
+  h1,
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  input {
+    width: 120px;
+    font-size: 16px;
+  }
+
+  button {
+    font-size: 16px;
+    padding: 4px 8px;
+  }
+
+  .guess-item {
+    font-size: 14px;
+  }
+
+  .success-message p {
+    font-size: 1rem;
+  }
+
+  .success-message #tries-count {
+    font-size: 1.2rem;
   }
 }
