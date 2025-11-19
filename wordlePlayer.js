@@ -12,6 +12,7 @@ const previousGuessesContainer = document.getElementById("previous-guesses");
 const filteredWordsContainer = document.getElementById("filtered-words");
 const wordCount = document.getElementById("word-count");
 const wordDropdown = document.getElementById("word-dropdown");
+const wordDropdownLabel = document.querySelector('label[for="word-dropdown"]');
 const newWordButton = document.getElementById("new-word");
 const keyboard = initKeyboard("keyboard");
 
@@ -28,6 +29,10 @@ function resetGame() {
   inputField.value = "";
   if (wordDropdown) {
     wordDropdown.value = "";
+    wordDropdown.style.display = ""; // Show dropdown again
+  }
+  if (wordDropdownLabel) {
+    wordDropdownLabel.style.display = ""; // Show label again
   }
   keyboard.reset();
   hideSuccessMessage();
@@ -89,6 +94,14 @@ submitButton.addEventListener("click", () => {
 
   possibleWords = filterWords(possibleWords, userWord, feedback);
   updateWordList(possibleWords);
+
+  // Hide the dropdown label and select after first submission
+  if (wordDropdownLabel) {
+    wordDropdownLabel.style.display = "none";
+  }
+  if (wordDropdown) {
+    wordDropdown.style.display = "none";
+  }
 
   // Clear the input field for next entry
   inputField.value = "";

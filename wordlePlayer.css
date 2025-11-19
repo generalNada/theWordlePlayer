@@ -153,7 +153,8 @@ button {
 }
 
 #guess::placeholder {
-  color: wheat;
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.4);
   opacity: 1; /* Ensure visibility */
 }
 
