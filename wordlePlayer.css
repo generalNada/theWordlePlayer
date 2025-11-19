@@ -92,6 +92,8 @@ input {
   max-width: 90%;
   text-align: center;
   box-sizing: border-box;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 button {
@@ -100,6 +102,8 @@ button {
   margin-left: 0;
   cursor: pointer;
   box-sizing: border-box;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .reset-button {
@@ -145,11 +149,26 @@ button {
   font-weight: bold;
   color: rgb(41, 41, 43);
   background-color: rgb(208, 220, 227);
+  font-size: 16px; /* Prevent iOS zoom - must be at least 16px */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 #guess,
 #submit {
   font-size: 0.65rem;
+}
+
+/* iOS-specific: Prevent zoom on input interactions */
+@supports (-webkit-touch-callout: none) {
+  /* This targets iOS Safari */
+  input,
+  button,
+  select {
+    font-size: 16px !important; /* iOS requires at least 16px to prevent zoom */
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
 }
 
 #guess::placeholder {

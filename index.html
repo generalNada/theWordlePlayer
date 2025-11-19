@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>WordleCloneCombined</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -28,23 +31,23 @@
     </select> -->
 
     <div id="top-header">
-  <h1>The Wordle Clone</h1>
-  <button id="new-word" class="reset-button" title="Generate New Word">🔄</button>
+      <h1>The Wordle Clone</h1>
+      <button id="new-word" class="reset-button" title="Generate New Word">
+        🔄
+      </button>
 
-  <label for="word-dropdown">Choose a starting word or enter your own:</label>
-  <select id="word-dropdown">
-    <option value="">Select a word</option>
-  </select>
-</div>
+      <label for="word-dropdown"
+        >Choose a starting word or enter your own:</label
+      >
+      <select id="word-dropdown">
+        <option value="">Select a word</option>
+      </select>
+    </div>
 
+    <h2>Previous Guesses</h2>
+    <ul id="previous-guesses"></ul>
 
-
-
-<h2>Previous Guesses</h2>
-<ul id="previous-guesses"></ul>
-
-<div id="keyboard"></div>
-
+    <div id="keyboard"></div>
 
     <div id="input-container">
       <input
