@@ -8,6 +8,50 @@ body {
   font-family: "Righteous", serif;
   max-width: 100%;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Reorder elements: Header/Dropdown -> Letter boxes -> Keyboard -> Input -> Possible Words */
+/* Top: Header and dropdown */
+h1,
+button#new-word,
+label[for="word-dropdown"],
+select#word-dropdown {
+  order: 1;
+}
+
+/* Letter boxes (Previous Guesses) */
+h2:not(#possible-words-header) {
+  order: 2;
+}
+
+#previous-guesses {
+  order: 2;
+}
+
+/* Keyboard */
+#keyboard {
+  order: 3;
+}
+
+/* Input container and Check button - must be above Possible Words */
+#input-container {
+  order: 4;
+}
+
+/* Bottom: Possible Words - must be after input */
+h2#possible-words-header {
+  order: 6;
+}
+
+#filtered-words {
+  order: 6;
+}
+
+/* Success message */
+#success-message {
+  order: 7;
 }
 
 h1 {
@@ -23,10 +67,11 @@ h2 {
 }
 
 #input-container {
-  margin-bottom: 20px;
+  margin: 30px auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
   gap: 10px;
 }
 
@@ -52,7 +97,7 @@ input {
 button {
   font-size: 18px;
   padding: 5px 10px;
-  margin-left: 10px;
+  margin-left: 0;
   cursor: pointer;
   box-sizing: border-box;
 }
@@ -480,4 +525,24 @@ button {
   .success-message #tries-count {
     font-size: 1.2rem;
   }
+}
+
+
+#top-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px auto;
+}
+
+#top-header h1 {
+  margin: 0;
+}
+
+#top-header label,
+#top-header select {
+  margin: 0;
+  font-size: 1rem;
 }
