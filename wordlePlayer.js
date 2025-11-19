@@ -90,6 +90,9 @@ submitButton.addEventListener("click", () => {
   possibleWords = filterWords(possibleWords, userWord, feedback);
   updateWordList(possibleWords);
 
+  // Clear the input field for next entry
+  inputField.value = "";
+
   // Check for win condition (all green)
   if (feedback.every(color => color === "green")) {
     showSuccessMessage();

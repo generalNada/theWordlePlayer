@@ -1,3 +1,11 @@
+// QWERTY keyboard layout (top row, middle row, bottom row)
+const QWERTY_LAYOUT = [
+  "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P",  // Top row
+  "A", "S", "D", "F", "G", "H", "J", "K", "L",        // Middle row
+  "Z", "X", "C", "V", "B", "N", "M"                    // Bottom row
+];
+
+// All letters for state management (alphabetical order)
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
 function createKeyElement(letter) {
@@ -71,7 +79,8 @@ export function initKeyboard(containerId) {
     ])
   );
 
-  LETTERS.forEach((letter) => {
+  // Add keys in QWERTY layout order
+  QWERTY_LAYOUT.forEach((letter) => {
     container.appendChild(createKeyElement(letter));
   });
 
