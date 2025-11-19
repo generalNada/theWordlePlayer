@@ -8,41 +8,43 @@ const QWERTY_LAYOUT = [
 // All letters for state management (alphabetical order)
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
-function createKeyElement(letter) {
+function createKeyElement(letter, isSpecialKey = false) {
   const key = document.createElement("div");
   key.className = "key";
   key.dataset.letter = letter;
 
-  // Create position indicators for corners and middle
-  const pos1 = document.createElement("span");
-  pos1.className = "key-position pos-1";
-  pos1.textContent = "1";
+  if (!isSpecialKey) {
+    // Create position indicators for corners and middle (only for letter keys)
+    const pos1 = document.createElement("span");
+    pos1.className = "key-position pos-1";
+    pos1.textContent = "1";
 
-  const pos2 = document.createElement("span");
-  pos2.className = "key-position pos-2";
-  pos2.textContent = "2";
+    const pos2 = document.createElement("span");
+    pos2.className = "key-position pos-2";
+    pos2.textContent = "2";
 
-  const pos3 = document.createElement("span");
-  pos3.className = "key-position pos-3";
-  pos3.textContent = "3";
+    const pos3 = document.createElement("span");
+    pos3.className = "key-position pos-3";
+    pos3.textContent = "3";
 
-  const pos4 = document.createElement("span");
-  pos4.className = "key-position pos-4";
-  pos4.textContent = "4";
+    const pos4 = document.createElement("span");
+    pos4.className = "key-position pos-4";
+    pos4.textContent = "4";
 
-  const pos5 = document.createElement("span");
-  pos5.className = "key-position pos-5";
-  pos5.textContent = "5";
+    const pos5 = document.createElement("span");
+    pos5.className = "key-position pos-5";
+    pos5.textContent = "5";
+
+    key.appendChild(pos1);
+    key.appendChild(pos2);
+    key.appendChild(pos3);
+    key.appendChild(pos4);
+    key.appendChild(pos5);
+  }
 
   const letterSpan = document.createElement("span");
   letterSpan.className = "key-letter";
   letterSpan.textContent = letter;
-
-  key.appendChild(pos1);
-  key.appendChild(pos2);
-  key.appendChild(pos3);
-  key.appendChild(pos4);
-  key.appendChild(pos5);
   key.appendChild(letterSpan);
 
   return key;
@@ -54,7 +56,7 @@ function formatPositions(prefix, positions) {
   return `${prefix}${sorted.join(",")}`;
 }
 
-export function initKeyboard(containerId) {
+export function initKeyboard(containerId, onKeyClick) {
   const container = document.getElementById(containerId);
 
   if (!container) {
@@ -81,8 +83,28 @@ export function initKeyboard(containerId) {
 
   // Add keys in QWERTY layout order
   QWERTY_LAYOUT.forEach((letter) => {
-    container.appendChild(createKeyElement(letter));
+    const keyElement = createKeyElement(letter);
+    // Make keys clickable to input letters
+    if (onKeyClick) {
+      keyElement.style.cursor = "pointer";
+      keyElement.addEventListener("click", () => {
+        onKeyClick(letter);
+      });
+    }
+    container.appendChild(keyElement);
   });
+
+  // Add Backspace key at the end
+  if (onKeyClick) {
+    const backspaceKey = createKeyElement("⌫", true);
+    backspaceKey.classList.add("backspace-key");
+    backspaceKey.style.cursor = "pointer";
+    backspaceKey.style.width = "80px"; // Make it wider
+    backspaceKey.addEventListener("click", () => {
+      onKeyClick("Backspace");
+    });
+    container.appendChild(backspaceKey);
+  }
 
   function renderKey(letter) {
     const key = container.querySelector(`[data-letter="${letter}"]`);

@@ -14,7 +14,32 @@ const wordCount = document.getElementById("word-count");
 const wordDropdown = document.getElementById("word-dropdown");
 const wordDropdownLabel = document.querySelector('label[for="word-dropdown"]');
 const newWordButton = document.getElementById("new-word");
-const keyboard = initKeyboard("keyboard");
+const keyboardContainer = document.getElementById("keyboard");
+const successMessage = document.getElementById("success-message");
+
+// Function to handle virtual keyboard key clicks
+function handleVirtualKeyClick(letter) {
+  if (inputField) {
+    const currentValue = inputField.value;
+    
+    if (letter === "Backspace") {
+      // Remove last character
+      inputField.value = currentValue.slice(0, -1);
+    } else {
+      // Only add letter if input is less than 5 characters
+      if (currentValue.length < 5) {
+        inputField.value = currentValue + letter.toLowerCase();
+      }
+    }
+    
+    // Trigger input event to ensure any listeners are notified
+    inputField.dispatchEvent(new Event("input", { bubbles: true }));
+    // Focus the input field
+    inputField.focus();
+  }
+}
+
+const keyboard = initKeyboard("keyboard", handleVirtualKeyClick);
 
 let possibleWords = [...lowerCaseCombinedWords];
 let previousGuesses = [];
@@ -36,6 +61,13 @@ function resetGame() {
   }
   keyboard.reset();
   hideSuccessMessage();
+  // Show keyboard again and hide success message
+  if (keyboardContainer) {
+    keyboardContainer.style.display = "";
+  }
+  if (successMessage) {
+    successMessage.style.display = "";
+  }
 }
 
 function generateNewSecretWord() {
@@ -73,7 +105,7 @@ wordDropdown.addEventListener("change", () => {
   inputField.value = wordDropdown.value; // Auto-fill input when dropdown is selected
 });
 
-submitButton.addEventListener("click", () => {
+function submitGuess() {
   let userWord = inputField.value.toLowerCase();
 
   // **************************************************
@@ -106,9 +138,25 @@ submitButton.addEventListener("click", () => {
   // Clear the input field for next entry
   inputField.value = "";
 
+  // Refocus input field for next entry (on non-iOS devices)
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  if (!isIOS) {
+    inputField.focus();
+  }
+
   // Check for win condition (all green)
   if (feedback.every(color => color === "green")) {
     showSuccessMessage();
+  }
+}
+
+submitButton.addEventListener("click", submitGuess);
+
+// Allow Enter key to submit on non-iOS devices
+inputField.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    submitGuess();
   }
 });
 
@@ -246,18 +294,24 @@ function displayFeedback(word, feedback) {
 }
 
 function showSuccessMessage() {
-  const successMessage = document.getElementById("success-message");
   const triesCount = document.getElementById("tries-count");
   if (successMessage && triesCount) {
     triesCount.textContent = previousGuesses.length;
     successMessage.classList.remove("hidden");
+    // Hide keyboard and show success message in its place
+    if (keyboardContainer) {
+      keyboardContainer.style.display = "none";
+    }
+    if (successMessage) {
+      successMessage.style.display = "block";
+    }
   }
 }
 
 function hideSuccessMessage() {
-  const successMessage = document.getElementById("success-message");
   if (successMessage) {
     successMessage.classList.add("hidden");
+    successMessage.style.display = "none";
   }
 }
 
@@ -278,6 +332,13 @@ document.addEventListener("DOMContentLoaded", () => {
     possibleWordsHeader.addEventListener("click", () => {
       filteredWords.classList.toggle("hidden-words");
     });
+  }
+
+  // Auto-focus input field on non-iOS devices for better keyboard experience
+  // Check if not iOS (iOS devices typically don't benefit from auto-focus)
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  if (!isIOS && inputField) {
+    inputField.focus();
   }
 });
 
