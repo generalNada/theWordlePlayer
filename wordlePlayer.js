@@ -292,18 +292,46 @@ function displayFeedback(word, feedback) {
   });
 }
 
+// Return a custom success message based on how many tries the user needed
+function getSuccessMessageForTries(tries) {
+  if (tries === 1) {
+    return "Unbelievable! You solved it in";
+  } else if (tries === 2) {
+    return "Genius! You solved it in";
+  } else if (tries === 3) {
+    return "Awesome! You cracked it in";
+  } else if (tries === 4) {
+    return "Nice work! You found it in";
+  } else if (tries === 5) {
+    return "Phew! You got it in";
+  } else if (tries === 6) {
+    return "Close call! You solved it in";
+  } else {
+    return "You found it in"; // 7 or more
+  }
+}
+
 function showSuccessMessage() {
-  const triesCount = document.getElementById("tries-count");
-  if (successMessage && triesCount) {
-    triesCount.textContent = previousGuesses.length;
+  const triesParagraph = successMessage
+    ? successMessage.querySelector("p")
+    : null;
+
+  const tries = previousGuesses.length;
+
+  if (successMessage && triesParagraph) {
+    const baseMessage = getSuccessMessageForTries(tries);
+    const triesWord = tries === 1 ? "try" : "tries";
+
+    // Build custom HTML so we can keep the highlighted tries-count styling
+    triesParagraph.innerHTML = `${baseMessage} <span id="tries-count">${tries}</span> ${triesWord}! Tap here to play again.`;
+
     successMessage.classList.remove("hidden");
+
     // Hide keyboard and show success message in its place
     if (keyboardContainer) {
       keyboardContainer.style.display = "none";
     }
-    if (successMessage) {
-      successMessage.style.display = "block";
-    }
+    successMessage.style.display = "block";
   }
 }
 
