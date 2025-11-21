@@ -2,9 +2,7 @@
 import { combinedWords } from "./theCombinedEnchilada.js";
 import { initKeyboard } from "./zoosKeys.js";
 
-let lowerCaseCombinedWords = combinedWords.map((word) =>
-  word.toLowerCase()
-);
+let lowerCaseCombinedWords = combinedWords.map((word) => word.toLowerCase());
 
 const inputField = document.getElementById("guess");
 const submitButton = document.getElementById("submit");
@@ -21,7 +19,7 @@ const successMessage = document.getElementById("success-message");
 function handleVirtualKeyClick(letter) {
   if (inputField) {
     const currentValue = inputField.value;
-    
+
     if (letter === "Backspace") {
       // Remove last character
       inputField.value = currentValue.slice(0, -1);
@@ -31,11 +29,11 @@ function handleVirtualKeyClick(letter) {
         inputField.value = currentValue + letter.toLowerCase();
       }
     }
-    
+
     // Trigger input event to ensure any listeners are notified
     inputField.dispatchEvent(new Event("input", { bubbles: true }));
     // Focus the input field
-    inputField.focus();
+    // inputField.focus();
   }
 }
 
@@ -139,13 +137,14 @@ function submitGuess() {
   inputField.value = "";
 
   // Refocus input field for next entry (on non-iOS devices)
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  const isIOS =
+    /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
   if (!isIOS) {
     inputField.focus();
   }
 
   // Check for win condition (all green)
-  if (feedback.every(color => color === "green")) {
+  if (feedback.every((color) => color === "green")) {
     showSuccessMessage();
   }
 }
@@ -336,9 +335,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Auto-focus input field on non-iOS devices for better keyboard experience
   // Check if not iOS (iOS devices typically don't benefit from auto-focus)
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  const isIOS =
+    /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
   if (!isIOS && inputField) {
     inputField.focus();
   }
 });
-
