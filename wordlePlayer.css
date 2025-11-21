@@ -160,7 +160,7 @@ button {
 
 #guess,
 #submit {
-  font-size: 0.65rem;
+  font-size: 2rem;
 }
 
 /* iOS-specific: Prevent zoom on input interactions */
@@ -565,7 +565,6 @@ button {
     font-size: 1.2rem;
   }
 }
-
 
 #top-header {
   display: flex;
